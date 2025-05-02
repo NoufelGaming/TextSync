@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" class="light-mode">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextSync - Sync Text Between Devices</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg class="sync-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"></path>
+                </svg>
+                <h1>TextSync</h1>
+            </div>
+            <div class="header-controls">
+                <button id="theme-toggle" class="icon-btn" title="Toggle dark mode">
+                    <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20">
+                        <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"></path>
+                    </svg>
+                    <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <div class="room-container" id="room-container">
+                <div class="welcome">
+                    <h2>Welcome to TextSync</h2>
+                    <p>A simple way to share text between your devices in real-time</p>
+                </div>
+                
+                <div class="rooms-list" id="rooms-list">
+                    <h3>Recent Rooms</h3>
+                    <div id="recent-rooms" class="recent-rooms">
+                        <p class="empty-rooms-msg">No recent rooms. Join a room to get started.</p>
+                    </div>
+                </div>
+
+                <div class="join-room-form">
+                    <h3>Enter or Create a Room</h3>
+                    <div class="input-group">
+                        <input type="text" id="room-input" placeholder="Enter a room name or ID">
+                        <button id="join-btn">Join Room</button>
+                    </div>
+                    
+                    <div class="password-toggle">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="password-toggle">
+                            <span class="checkmark"></span>
+                            Add password protection
+                        </label>
+                    </div>
+                    
+                    <div id="password-section" class="password-section hidden">
+                        <div class="input-group">
+                            <input type="password" id="password-input" placeholder="Create a password">
+                            <div class="input-addon">
+                                <svg viewBox="0 0 24 24" width="16" height="16">
+                                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="hint">This will protect your room with a password. Anyone with the link will need the password to join.</p>
+                    </div>
+                    
+                    <div class="room-options">
+                        <button id="create-random-room" class="text-btn">Generate random room</button>
+                    </div>
+                    <p class="hint">Use the same room name on all your devices to sync text between them.</p>
+                </div>
+            </div>
+
+            <div class="editor-container hidden" id="editor-container">
+                <div class="room-info">
+                    <h2>Room: <span id="room-name"></span></h2>
+                    <div class="actions">
+                        <button id="copy-btn" class="action-btn">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <button id="leave-btn" class="action-btn danger">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+                                <polyline points="16 17 21 12 16 7"></polyline>
+                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                            Leave
+                        </button>
+                    </div>
+                </div>
+
+                <div class="user-presence" id="user-presence">
+                    <span class="presence-indicator">•</span>
+                    <span id="users-count">Just you</span>
+                </div>
+
+                <div class="textarea-wrapper">
+                    <textarea id="text-editor" placeholder="Type or paste text here. It will automatically sync across all your devices."></textarea>
+                </div>
+
+                <div class="status-bar">
+                    <div class="status">
+                        <span id="sync-status">Ready to sync</span>
+                        <span id="copy-status" class="hidden">Copied to clipboard!</span>
+                    </div>
+                    <div class="char-count" id="char-count">0 characters</div>
+                </div>
+
+                <div class="share-link">
+                    <p>Share this link with others to collaborate:</p>
+                    <div class="input-group">
+                        <input type="text" id="share-url" readonly>
+                        <button id="copy-link-btn">Copy Link</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>No accounts needed. Just open this website on any device to sync your text.</p>
+            <small>Password protected rooms available for enhanced privacy</small>
+        </footer>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 

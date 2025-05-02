@@ -1,0 +1,14 @@
+{
+  "name": "simple-text-sync",
+  "version": "1.0.0",
+  "description": "Simple real-time text syncing between devices",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2",
+    "lowdb": "^1.0.0"
+  }
+} 
